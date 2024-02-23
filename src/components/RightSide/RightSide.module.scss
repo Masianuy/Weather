@@ -1,0 +1,46 @@
+.avatar {
+  align-self: flex-end;
+}
+.wrap-today {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.day {
+  font-size: 1.4rem;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+}
+.temp {
+  font-size: 2.3rem;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  & sup {
+    position: absolute;
+    top: 5px;
+    left: 100%;
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+}
+.city {
+  font-size: 1.2rem;
+  color: #ffffff;
+  letter-spacing: 0.009rem;
+}
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  & div {
+    text-align: center;
+  }
+}
