@@ -9,6 +9,7 @@ const RightSide = ({ todayCurrentCityWeather, currentCity }) => {
   const now = new Date().getTime();
   const refresh = () => {
     const distance = countDownDate - now;
+    setCountTime(distance);
     const days = Math.floor(Math.abs(distance / (1000 * 60 * 60 * 24)));
     const hours = Math.floor(
       Math.abs((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
@@ -24,19 +25,11 @@ const RightSide = ({ todayCurrentCityWeather, currentCity }) => {
       seconds,
     };
   };
-  const distance = todayCurrentCityWeather && countDownDate - now;
+
   useEffect(() => {
-    const countDownTimer = () => setInterval(refresh, 1000);
-    if (distance > 0) {
-      setCountTime(distance);
-      countDownTimer();
-    }
-    return () => {
-      if (distance < 0) {
-        clearInterval(countDownTimer);
-      }
-    };
-  }, [countTime]);
+      const countDownTimer = setInterval(() => setCountTime(refresh()), 1000);
+      return () => clearInterval(countDownTimer);
+  }, []); // [countTime]
 
   return (
     <>
@@ -60,19 +53,19 @@ const RightSide = ({ todayCurrentCityWeather, currentCity }) => {
         <p className={styles.city}>{address}</p>
         <div className={styles.countdown}>
           <div>
-            <p>{refresh().days}</p>
+            <p>{countTime?.days}</p>
             <p>days</p>
           </div>
           <div>
-            <p>{refresh().hours}</p>
+            <p>{countTime?.hours}</p>
             <p>hours</p>
           </div>
           <div>
-            <p>{refresh().minutes}</p>
+            <p>{countTime?.minutes}</p>
             <p>minutes</p>
           </div>
           <div>
-            <p>{refresh().seconds}</p>
+            <p>{countTime?.seconds}</p>
             <p>seconds</p>
           </div>
         </div>
