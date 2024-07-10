@@ -8,6 +8,7 @@ import {
 import './App.css';
 import Weather from './components/Weather/Weather';
 import Timer from './components/Timer/Timer';
+import Page404 from './components/Page404/Page404';
 
 function Home () {
   return (
@@ -30,6 +31,7 @@ function App () {
             <Route path='weather' element={<Weather />} />
             <Route path='timer' element={<Timer />} />
           </Route>
+          <Route path='/*' element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </>

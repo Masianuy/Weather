@@ -64,7 +64,7 @@ const ModalForm = props => {
                       ))}
                     </select>
                     <label>Start date</label>
-                    <Field name='startDate' placeholderText='Select date'>
+                    <Field name='startDate'>
                       {({ field, meta, form: { setFieldValue } }) => {
                         return (
                           <DatePicker

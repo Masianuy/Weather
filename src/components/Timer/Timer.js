@@ -2,16 +2,11 @@ import React from 'react';
 import clock from './clock.png';
 import EventForm from './EventForm';
 import styles from './Timer.module.scss';
+import { connect } from 'react-redux';
 
-function Timer () {
-  const state = [
-    {
-      title: 'Event 1',
-      dayOfEvent: '2024-09-01',
-      timeOfEvent: '12:00',
-      timeOfAlert: '9',
-    }
-  ]
+function Timer ({events}) {
+  console.log(events);
+  
   return (
     <section className={styles.container}>
       <div className={styles['title-block']}>
@@ -21,11 +16,12 @@ function Timer () {
         </p>
       </div>
       <ul className={styles.events}>
-        {state.map(el => <li><p>{el.title}</p><p>{el.timeOfAlert}</p></li>)}
+        {events ? events.map(el => <li key={el.title}><p>{el.title}</p><p>{el.timeOfAlert}</p></li>) : 'Nothing to render'}
       </ul>
       <EventForm />
     </section>
   );
 }
+const mapStateToProps = ({ eventsList }) => eventsList;
 
-export default Timer;
+export default connect(mapStateToProps)(Timer);

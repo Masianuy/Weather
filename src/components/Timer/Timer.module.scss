@@ -23,13 +23,14 @@
 
 .events {
   padding: 2rem 0;
-    & li {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.7rem;
-      border-radius: 7px;
-      background-color: #acddc7;
-    }
+  & li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem;
+    border-radius: 7px;
+    background-color: #acddc7;
+    margin-bottom: 5px;
+  }
 }
 
 form {
@@ -37,7 +38,7 @@ form {
 }
 
 .input-box {
-    width: 100%;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -47,8 +48,12 @@ form {
   }
   & input {
     border-radius: 5px;
-    border: 1px solid #d5d5d5;
+    border: none;
     padding: 0.5rem;
-    align-content: stretch;
+    outline: 1px solid #c4c4c4;
+
   }
+    & .date-input {
+      padding: 0.5rem 0.5rem 0.5rem 2rem;
+    }
 }

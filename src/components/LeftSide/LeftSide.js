@@ -24,6 +24,7 @@ const LeftSide = ({
   const [choosenCity, setCity] = useState({});
   const [showModalForm, setModalForm] = useState(false);
   const [search, setSearch] = useState('');
+  
   useEffect(() => {
     loadDefaultCity();
     setCity(currentCity);
