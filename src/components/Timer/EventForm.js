@@ -6,16 +6,23 @@ import styles from './Timer.module.scss';
 import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 import { addEvent } from '../../store/slices/eventsSlice';
+import moment from 'moment';
 
-function EventForm ({createEvent}) {
+function EventForm ({ createEvent }) {
   const initialValues = {
     title: '',
     dayOfEvent: '',
     timeOfAlert: 1,
   };
   const handleSubmit = values => {
+    values.dayOfEvent = moment(values.dayOfEvent).format();
+    values.timeOfAlert = Number(values.timeOfAlert);
+    const d = moment(values.dayOfEvent).diff(moment().utc());
     createEvent(values);
-    console.log(values);
+    console.log(d);
+    console.log(moment.duration(d))
+    // console.log(moment(values.dayOfEvent)).diff(moment(new Date()))
+    // console.log(values.dayOfEvent.subtract(values.timeOfAlert, 'hours').format('LLL'));
   };
   const VALIDATE_EVENTS_FORM = yup.object({
     title: yup.string().min(1).required('Title event is required'),
@@ -76,7 +83,7 @@ function EventForm ({createEvent}) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createEvent: (e) => dispatch(addEvent(e))
+  createEvent: e => dispatch(addEvent(e)),
 });
 
 export default connect(null, mapDispatchToProps)(EventForm);
