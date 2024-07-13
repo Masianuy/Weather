@@ -8,9 +8,8 @@ const eventsSlice = createSlice({
     events: [
       {
         title: 'Event 1',
-        dayOfEvent: '2024-09-01',
-        timeOfEvent: '12:00',
-        timeOfAlert: '9',
+        dayOfEvent: '2024-07-13T22:00:00',
+        timeOfAlert: '10',
       },
     ],
     isFetching: false,

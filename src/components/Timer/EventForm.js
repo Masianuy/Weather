@@ -19,10 +19,6 @@ function EventForm ({ createEvent }) {
     values.timeOfAlert = Number(values.timeOfAlert);
     const d = moment(values.dayOfEvent).diff(moment().utc());
     createEvent(values);
-    console.log(d);
-    console.log(moment.duration(d))
-    // console.log(moment(values.dayOfEvent)).diff(moment(new Date()))
-    // console.log(values.dayOfEvent.subtract(values.timeOfAlert, 'hours').format('LLL'));
   };
   const VALIDATE_EVENTS_FORM = yup.object({
     title: yup.string().min(1).required('Title event is required'),

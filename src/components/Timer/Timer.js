@@ -1,16 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import clock from './clock.png';
 import EventForm from './EventForm';
+import Item from './Item';
 import styles from './Timer.module.scss';
-import { connect } from 'react-redux';
-import moment from 'moment';
 
 function Timer ({ events }) {
-  const today = new Date();
-  // const timeToEvent = moment(today).diff(moment(dayOfEvent));
-  // console.log(timeToEvent);
-  //moment(today).diff(moment(el.dayOfEvent)).humanize()
-
   return (
     <section className={styles.container}>
       <div className={styles['title-block']}>
@@ -20,14 +15,7 @@ function Timer ({ events }) {
         </p>
       </div>
       <ul className={styles.events}>
-        {events
-          ? events.map(el => (
-              <li key={el.title}>
-                <p>{el.title}</p>
-                <p>{moment(moment(today).diff(moment(el.dayOfEvent))).get('hour')}</p>
-              </li>
-            ))
-          : 'Nothing to render'}
+        {events ? events.map(el => <Item key={el.title} el={el} />) : 'Nothing to render'}
       </ul>
       <EventForm />
     </section>
