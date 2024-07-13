@@ -4,32 +4,35 @@ import styles from './Timer.module.scss';
 
 function Item ({ el }) {
   const [currentTime, setCurrentTime] = useState(moment());
-  const [leftTimes, setLeftTimes] = useState();
+  const [progress, setProgress] = useState(0);
+  console.log(progress)
   const leftTime = moment.duration(moment(el.dayOfEvent).diff(currentTime));
-  const timeFromAlertToEvent = moment(
-    moment(el.dayOfEvent).subtract(el.timeOfAlert, 'hours')
-  ).valueOf();
-  const timeToEvent = moment(
-    moment(el.dayOfEvent).diff(currentTime.valueOf())
-  ).valueOf();
-  const timeEvent = moment(el.dayOfEvent).valueOf();
-  const w = Math.floor((leftTimes * 100) / moment(el.dayOfEvent).valueOf());
-  // console.log(timeToEvent)
-  // console.log('timeFromAlertToEvent>>>', timeFromAlertToEvent)
-  // console.log(w)
 
   const timerCalculation = date => {
     const months = date.months() !== 0 ? `${date.months()} months` : '';
     const days = date.days() !== 0 ? `${date.days()} days` : '';
     const hours = date.hours() !== 0 ? `${date.hours()} hours` : '';
     const mins = date.minutes() !== 0 ? `${date.minutes()} minutes` : '';
-    const secs = date.seconds() ? `${date.seconds()} seconds` : '';
+    const secs = `${date.seconds()} seconds`;
     return `${months} ${days} ${hours} ${mins} ${secs}`;
   };
+  useEffect(() => {
+    const timeFromAlertToEvent = moment(
+      moment(el.dayOfEvent).subtract(el.timeOfAlert, 'hours')
+    ).valueOf();
+    const timeToEvent = moment(el.dayOfEvent).diff(
+      timeFromAlertToEvent.valueOf()
+    );
+    if (timeFromAlertToEvent < currentTime.valueOf()) {
+      const w = Math.floor(
+        ((timeToEvent - leftTime.valueOf()) / timeToEvent) * 100
+      );
+      setProgress(w);
+    }
+  }, [currentTime, leftTime]);
 
   useEffect(() => {
     const setTimer = setInterval(() => {
-      setLeftTimes(moment.duration(moment(el.dayOfEvent).diff(currentTime)))
       setCurrentTime(moment());
     }, 1000);
     return () => clearInterval(setTimer);
@@ -37,7 +40,7 @@ function Item ({ el }) {
 
   return (
     <li>
-      <span className={styles.timer} style={{ left: `100%` }}></span>
+      <span className={styles.timer} style={{ right: `${progress}%` }}></span>
       <p>{el.title}</p>
       <p>{timerCalculation(leftTime)}</p>
     </li>

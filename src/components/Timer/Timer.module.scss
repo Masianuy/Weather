@@ -29,8 +29,8 @@
     display: flex;
     justify-content: space-between;
     padding: 0.7rem;
+    background-color: #ed7d7d;
     border-radius: 7px;
-    background-color: #acddc7;
     margin-bottom: 5px;
     overflow: hidden;
     & * {
@@ -44,7 +44,7 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: #ed7d7d;
+    background-color: #acddc7;
   }
 }
 
