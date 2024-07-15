@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import styles from './Timer.module.scss';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Item ({ el }) {
   const [currentTime, setCurrentTime] = useState(moment());
   const [progress, setProgress] = useState(0);
-  console.log(progress)
   const leftTime = moment.duration(moment(el.dayOfEvent).diff(currentTime));
 
   const timerCalculation = date => {
@@ -16,19 +17,32 @@ function Item ({ el }) {
     const secs = `${date.seconds()} seconds`;
     return `${months} ${days} ${hours} ${mins} ${secs}`;
   };
+  const alermUser = pr =>
+    toast(`🦄 Wow so ${pr}!`, {
+      position: 'top-right',
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      progress: undefined,
+      theme: 'dark',
+      transition: Slide,
+    });
+  const timeFromAlertToEvent = moment(
+    moment(el.dayOfEvent).subtract(el.timeOfAlert, 'hours')
+  ).valueOf();
+
   useEffect(() => {
-    const timeFromAlertToEvent = moment(
-      moment(el.dayOfEvent).subtract(el.timeOfAlert, 'hours')
-    ).valueOf();
     const timeToEvent = moment(el.dayOfEvent).diff(
       timeFromAlertToEvent.valueOf()
     );
-    if (timeFromAlertToEvent < currentTime.valueOf()) {
-      const w = Math.floor(
-        ((timeToEvent - leftTime.valueOf()) / timeToEvent) * 100
-      );
-      setProgress(w);
+    if (moment(el.dayOfEvent).valueOf() < currentTime.valueOf()) {
+      return setProgress(100);
     }
+    const w = Math.floor(
+      ((timeToEvent - leftTime.valueOf()) / timeToEvent) * 100
+    );
+    setProgress(w);
   }, [currentTime, leftTime]);
 
   useEffect(() => {
@@ -38,11 +52,27 @@ function Item ({ el }) {
     return () => clearInterval(setTimer);
   }, []);
 
+  useEffect(() => {
+    if (currentTime.valueOf() >= timeFromAlertToEvent.valueOf()) {
+      alermUser('time');
+      console.log('1', timeFromAlertToEvent);
+      // console.log('2', leftTime);
+    }
+    if (leftTime < 0) {
+      alermUser('error');
+    }
+  }, []);
+
   return (
     <li>
       <span className={styles.timer} style={{ right: `${progress}%` }}></span>
       <p>{el.title}</p>
-      <p>{timerCalculation(leftTime)}</p>
+      <p>
+        {leftTime.valueOf() > 0
+          ? timerCalculation(leftTime)
+          : 'The event has already passed!'}
+      </p>
+      <ToastContainer closeOnClick stacked transition={Slide} />
     </li>
   );
 }
