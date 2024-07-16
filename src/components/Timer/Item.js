@@ -17,17 +17,19 @@ function Item ({ el }) {
     const secs = `${date.seconds()} seconds`;
     return `${months} ${days} ${hours} ${mins} ${secs}`;
   };
-  const alermUser = pr =>
-    toast(`🦄 Wow so ${pr}!`, {
+
+  const alermUser = message =>
+    toast(`${message}`, {
       position: 'top-right',
       autoClose: false,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,
       progress: undefined,
-      theme: 'dark',
+      theme: 'light',
       transition: Slide,
     });
+
   const timeFromAlertToEvent = moment(
     moment(el.dayOfEvent).subtract(el.timeOfAlert, 'hours')
   ).valueOf();
@@ -53,13 +55,11 @@ function Item ({ el }) {
   }, []);
 
   useEffect(() => {
-    if (currentTime.valueOf() >= timeFromAlertToEvent.valueOf()) {
-      alermUser('time');
-      console.log('1', timeFromAlertToEvent);
-      // console.log('2', leftTime);
-    }
     if (leftTime < 0) {
-      alermUser('error');
+      alermUser(`The ${el.title} has already passed`);
+    }
+    if (currentTime.valueOf() >= timeFromAlertToEvent.valueOf() && leftTime > 0) {
+      alermUser(`🦄 Wow, soon ${el.title}`);
     }
   }, []);
 
@@ -72,7 +72,7 @@ function Item ({ el }) {
           ? timerCalculation(leftTime)
           : 'The event has already passed!'}
       </p>
-      <ToastContainer closeOnClick stacked transition={Slide} />
+      <ToastContainer closeOnClick transition={Slide} />
     </li>
   );
 }
