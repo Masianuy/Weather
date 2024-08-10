@@ -34,3 +34,11 @@ button[disabled]:hover {
   cursor: not-allowed;
   color: #666666;
 }
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}

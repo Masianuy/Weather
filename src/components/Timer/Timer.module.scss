@@ -1,0 +1,74 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.title-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid #b1adad;
+  & p {
+    display: flex;
+    align-items: center;
+  }
+  & img {
+    margin-left: 1rem;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.events {
+  padding: 2rem 0;
+  & li {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem;
+    background-color: #ed7d7d;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    & * {
+      z-index: 5;
+    }
+  }
+  & span{
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #acddc7;
+  }
+}
+
+form {
+  min-width: 70%;
+}
+
+.input-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  & p {
+    margin-right: 1rem;
+  }
+  & input {
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+    outline: 1px solid #c4c4c4;
+
+  }
+    & .date-input {
+      padding: 0.5rem 0.5rem 0.5rem 2rem;
+    }
+}
